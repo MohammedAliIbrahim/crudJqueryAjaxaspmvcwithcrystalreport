@@ -1,0 +1,114 @@
+﻿@model WebApplication24.Models.employee
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+<form id="form" method="post">
+    
+        <h4>employee</h4>
+        <hr />
+
+        <input data-val="true" data-val-number="The field Id must be a number." data-val-required="The Id field is required." id="Id" name="Id" type="hidden" value="" />
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="name">name</label>
+            <div class="col-md-10">
+                <input class="form-control text-box single-line" id="name" name="name" type="text" value="" />
+                <span class="field-validation-valid text-danger" data-valmsg-for="name" data-valmsg-replace="true"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="city">city</label>
+            <div class="col-md-10">
+                <input class="form-control text-box single-line" id="city" name="city" type="text" value="" />
+                <span class="field-validation-valid text-danger" data-valmsg-for="city" data-valmsg-replace="true"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" id="btn1" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>*@
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+
+
+       
+            //var url = window.location.pathname,
+            //var id = url.substring(url.lastIndexOf('/') + 1)
+        //window.location.pathname.substring(url.lastIndexOf('/') + 1)
+        
+        $.ajax({
+
+            url: 'http://localhost:1798/employees/getemployee/' + window.location.pathname.substring(window.location.pathname.lastIndexOf('/') + 1) ,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                var employee = data;
+                employee.city
+                //name 
+                $("#city").val(employee.city);
+                $("#name").val(employee.name);
+                $("#Id").val(employee.Id);
+                
+            },
+            error: function (x, y, z) {
+                alert(x + '\n' + y + '\n' + z);
+            }
+        });
+    });
+
+
+
+
+</script>
+
+<script>
+
+
+
+
+  
+        $(document).ready(function () {
+
+            $("#btn1").click(function () {
+                var data = $('#form').serialize();
+                $.ajax({
+                    url: 'http://localhost:1798/employees/edit/' + $("#Id").val(),
+                
+                    type: 'POST',
+                    data: data,
+                    success: function (response) {
+
+                       // alert("done");
+                    },
+                    error: function (x, y, z) {
+                      //  alert(x + '\n' + y + '\n' + z);
+                    }
+                });
+            });
+    });
+
+
+
+
+</script>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

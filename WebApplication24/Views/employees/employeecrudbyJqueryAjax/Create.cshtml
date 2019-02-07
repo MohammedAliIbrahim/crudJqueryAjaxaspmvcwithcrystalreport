@@ -1,0 +1,113 @@
+﻿
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+
+
+<form  id="form" method="post">
+    
+        <h4>employee</h4>
+        <hr />
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="name">name</label>
+            <div class="col-md-10">
+                <input class="form-control text-box single-line" id="name" name="name" type="text" value="" />
+                <span class="field-validation-valid text-danger" data-valmsg-for="name" data-valmsg-replace="true"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="city">city</label>
+            <div class="col-md-10">
+                <input class="form-control text-box single-line" id="city" name="city" type="text" value="" />
+                <span class="field-validation-valid text-danger" data-valmsg-for="city" data-valmsg-replace="true"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" value="Create" class="btn btn-default" id="btn1" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a href="/employees" id="m">Back to List</a>
+    @*@Html.ActionLink("Back to List", "Index")*@
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>*@
+<script>
+    $(document).ready(function () {
+
+        $("#btn1").click(function () {
+        var data = $('#form').serialize();
+        $.ajax({
+            url: 'http://localhost:1798/employees/create',
+            type: 'POST',
+            data: data,
+            success: function (response) {
+                $("#m").click();
+               // alert("done");
+            },
+            error: function (x, y, z) {
+                $("#m").click();
+              //  alert(x + '\n' + y + '\n' + z);
+            }
+        });
+        $("#m").click();
+        window.location = "http://localhost:1798/employees";
+      });
+    });
+
+
+    //$("#btn1").click(function () {
+
+    //    var employee = {
+    //        //ID: $('#txtaddEmpid').val(),
+    //        name: $('#name').val(),
+    //        city: $('#city').val()
+            
+    //    };
+
+
+    //    $.ajax({
+    //        url: 'http://localhost:1798/employees/create',
+    //        type: 'POST',
+    //        dataType: 'json',
+    //        contentType: "application/json;charset=utf-8",
+    //        data: JSON.stringify(employee), 
+
+
+    //        //name:n ;
+    //        //city: c;
+
+            
+    //        success: function (data) {
+    //            window.location.replace("http://stackoverflow.com");
+                  
+                
+    //        },
+    //        error: function (x, y, z) {
+    //            alert(x + '\n' + y + '\n' + z);
+    //        }
+    //    });
+    //});
+
+
+
+
+</script>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

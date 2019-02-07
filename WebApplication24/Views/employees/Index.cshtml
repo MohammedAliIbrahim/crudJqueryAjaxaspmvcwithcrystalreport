@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+    <br />
+    <br />
+    @Html.ActionLink("export to pdf", "exportreport")
+</p>
+<table class="table" id="table1">
+    <tr>
+        <th>
+            name
+        </th>
+        <th>
+            city
+        </th>
+        <th></th>
+    </tr>
+
+
+</table>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>*@
+<script>
+
+    $(document).ready(function () {
+        $.ajax({
+            url: 'http://localhost:1798/employees/getemployees',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                var employees = data;
+                for (var i = 0; i < employees.length; i++) {
+
+
+                    $('#table1').append(
+                        "<tr><td>" + employees[i].name + "</td><td>" + employees[i].city + "</td> <td><a href=/employees/Edit/" + employees[i].Id + ">edit</a>---<a href=/employees/Delete/" + employees[i].Id +">delete</a></td></tr>"
+
+                    );
+                }
+            },
+            error: function (x, y, z) {
+                alert(x + '\n' + y + '\n' + z);
+            }
+        });
+    });
+      
+      
+    
+
+</script>

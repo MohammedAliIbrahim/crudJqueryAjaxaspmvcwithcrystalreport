@@ -1,0 +1,103 @@
+﻿@model WebApplication24.Models.employee
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>employee</h4>
+    <hr />
+   
+
+
+    <dl class="dl-horizontal" id="table1">
+       
+
+    </dl>
+    <span id="Id" name="Id" type="hidden" value="" />
+    <form method="post">
+                <div class="form-actions no-color">
+
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            <a href="/employees">Back to List</a>
+        </div>
+    </form>
+
+</div>
+
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>*@
+<script>
+
+    $(document).ready(function () {
+
+
+
+            //var url = window.location.pathname,
+            //var id = url.substring(url.lastIndexOf('/') + 1)
+        //window.location.pathname.substring(url.lastIndexOf('/') + 1)
+
+        $.ajax({
+
+            url: 'http://localhost:1798/employees/getemployee/' + window.location.pathname.substring(window.location.pathname.lastIndexOf('/') + 1) ,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                var employee = data;
+                employee.city
+                //name
+                $("#Id").val(employee.Id);
+                $('#table1').append(
+
+                    " <dt>name</dt> <dd>" +employee.name + "</dd> <dt>city</dt> <dd>" + employee.city +"</dd>" 
+                    
+               // $("#city").val(employee.city);
+               // $("#name").val(employee.name);
+                
+                    )
+            },
+            error: function (x, y, z) {
+                alert(x + '\n' + y + '\n' + z);
+            }
+        });
+    });
+
+
+
+
+</script>
+
+<script>
+
+
+
+
+
+        $(document).ready(function () {
+
+            $("#btn1").click(function () {
+               // var data = $('#form').serialize();
+                $.ajax({
+                    url: 'http://localhost:1798/employees/delete/' + $("#Id").val(),
+
+                    type: 'POST',
+                    data: data,
+                    success: function (response) {
+
+                       // alert("done");
+                    },
+                    error: function (x, y, z) {
+                        //alert(x + '\n' + y + '\n' + z);
+                    }
+                });
+            });
+    });
+
+
+
+
+</script>
