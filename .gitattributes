@@ -38,6 +38,9 @@
 ###############################################################################
 # behavior for image files
 #
+
+* linguist-vendored
+*.cs linguist-vendored=false
 # image files are treated as binary by default.
 ###############################################################################
 #*.jpg   binary
